@@ -13,10 +13,19 @@ const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-      addToCart: (state, action: PayloadAction<IProduct>) => {
-          state.products.push(action.payload)
+    addToCart: (state, action: PayloadAction<IProduct>) => {
+      const isExist = state.products.find(
+        (product) => product._id === action.payload._id
+      );
+
+      if (isExist) {
+        // isExist.quantity! += 1;
+        isExist.quantity = isExist.quantity! + 1;
+      } else {
+        state.products.push({ ...action.payload, quantity: 1 });
+      }
     },
   },
 });
-export const {addToCart } = cartSlice.actions;
+export const { addToCart } = cartSlice.actions;
 export default cartSlice.reducer;
