@@ -3,7 +3,7 @@ import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
 import { Switch } from '@/components/ui/switch';
 import { useToast } from '@/components/ui/use-toast';
-import { useGetProductsQuery } from '@/redux/api/apiSlice';
+import { useGetProductsQuery } from '@/redux/features/products/productApi';
 import {
   setPriceRange,
   toggleStock,
@@ -81,7 +81,7 @@ export default function Products() {
           <div>From 0$ To {priceRange}$</div>
         </div>
       </div>
-      {isLoading && <h1 className='text-xl'>Loading...</h1>}
+      {isLoading && <h1 className="text-xl">Loading...</h1>}
       <div className="col-span-9 grid grid-cols-3 gap-10 pb-20">
         {productsData?.map((product: IProduct) => (
           <ProductCard product={product} />
