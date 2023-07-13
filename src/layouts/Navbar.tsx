@@ -1,4 +1,7 @@
-import { useAppSelector } from '@/redux/hook';
+import { auth } from '@/lib/firebase';
+import { setUser } from '@/redux/features/user/userSlice';
+import { useAppDispatch, useAppSelector } from '@/redux/hook';
+import { signOut } from 'firebase/auth';
 import { HiOutlineSearch } from 'react-icons/hi';
 import { Link, NavLink } from 'react-router-dom';
 import logo from '../assets/images/technet-logo.png';
@@ -17,10 +20,14 @@ import {
 export default function Navbar() {
   const { user } = useAppSelector((state) => state.user);
   console.log(user);
-  
-  // const 
 
+  const dispatch = useAppDispatch();
 
+  const handleLogout = () => {
+    signOut(auth).then(() => {
+      dispatch(setUser(null));
+    });
+  };
   return (
     <nav className="w-full h-16 fixed top backdrop-blur-lg z-10">
       <div className="h-full w-full bg-white/60">
@@ -69,7 +76,10 @@ export default function Navbar() {
                         <DropdownMenuItem className="cursor-pointer">
                           Profile
                         </DropdownMenuItem>
-                        <DropdownMenuItem className="cursor-pointer">
+                        <DropdownMenuItem
+                          className="cursor-pointer"
+                          onClick={handleLogout}
+                        >
                           Logout
                         </DropdownMenuItem>
                       </>
